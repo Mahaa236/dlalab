@@ -1,3 +1,8 @@
+Datasets: tinyurl.com/dla-data
+Codes-pdf: tinyurl.com/dlalabext
+Codes&procedure: tinyurl.com/deepexternalpdf 
+Colab codes: tinyurl.com/deep-external
+
 # Deep Learning Lab Experiments
 
 Six Jupyter notebooks based on the supplied lab notes.
