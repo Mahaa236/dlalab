@@ -1,3 +1,8 @@
+- Datasets: tinyurl.com/dla-data
+- Codes-pdf: tinyurl.com/dlalabext
+- Codes&procedure: tinyurl.com/deepexternalpdf 
+- Colab codes: tinyurl.com/deep-external
+
 # Deep Learning Lab Experiments
 
 Repository: https://github.com/Mahaa236/dlalab
