@@ -2,7 +2,7 @@
 
 Repository: https://github.com/Mahaa236/dlalab
 
-This repository provides **Jupyter notebooks** and matching **standalone Python scripts** for the six lab experiments, plus a configurable Kaggle dataset downloader.
+This repository provides six Jupyter notebooks, six matching standalone Python scripts, and dataset download helpers.
 
 ## Jupyter notebooks
 - [Experiment 1 — Steering Angle Prediction](notebooks/experiment_01.ipynb)
@@ -20,30 +20,23 @@ This repository provides **Jupyter notebooks** and matching **standalone Python 
 - [Experiment 5](python/experiment_05.py)
 - [Experiment 6](python/experiment_06.py)
 
-## Kaggle dataset download
-- [Kaggle setup and dataset requirements](datasets/README.md)
-- [Download helper script](datasets/kaggle_download.py)
+## Kaggle datasets
+Read [dataset setup instructions](datasets/README.md) and use the [download helper](datasets/kaggle_download.py).
 
-### Quick setup
+Install the dependencies:
 ```bash
 python -m pip install -r requirements.txt
 ```
 
-Choose a Kaggle dataset whose files match the experiment, accept its terms, and configure Kaggle authentication as described in `datasets/README.md`. Then set the appropriate environment variable to the dataset's `OWNER/DATASET-SLUG` and run, for example:
-
+For Quora Question Pairs, first sign in to Kaggle, configure the Kaggle CLI, and accept the competition rules at https://www.kaggle.com/c/quora-question-pairs/data. Then run:
 ```bash
-# Linux/macOS example
-export KAGGLE_QUORA_DATASET="OWNER/DATASET-SLUG"
 python datasets/kaggle_download.py quora
 ```
 
-The placeholder must be replaced with a real dataset slug from Kaggle. The downloader does not choose or verify a specific dataset for you. Check the resulting file structure and update paths if the Kaggle dataset uses a different layout.
+For HAR, driving, and MIDI datasets, choose a Kaggle dataset whose files match the experiment and set the corresponding environment variable to its real `OWNER/DATASET-SLUG`. Exact commands and expected file layouts are in [datasets/README.md](datasets/README.md). The downloader cannot safely guess the right dataset for you.
 
-## Dataset notes
-- Quora Question Pairs needs a `train.csv` with `question1`, `question2`, and `is_duplicate`.
-- Human Activity Recognition needs the UCI HAR train/test text-file structure.
-- Steering experiments need a compatible driving log and image set.
-- MIDI generation needs `.mid` files.
-- Datasets are not stored in this repository; avoid committing large datasets or credentials.
-
-These are educational baselines. Model metrics and outputs are generated when you run the code and are not guaranteed in advance.
+## Important
+- Downloaded datasets are not committed to this repository; many are large and have separate terms/licenses.
+- Never commit Kaggle credentials or API tokens.
+- Check file layout and update paths after downloading.
+- Model metrics and outputs are generated when you run each script; they are not guaranteed in advance.
