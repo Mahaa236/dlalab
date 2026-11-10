@@ -1,54 +1,67 @@
 # Kaggle dataset setup
 
-## 1. Install the downloader
-Use Python 3.10–3.12 where supported by your TensorFlow version:
-
+## Install tools
 ```bash
-python -m pip install kagglehub
+python -m pip install kaggle kagglehub
 ```
 
-KaggleHub handles Kaggle authentication using your configured Kaggle credentials. If prompted, follow Kaggle's current authentication instructions. Do not commit API tokens, `kaggle.json`, passwords, or private credentials to GitHub.
+Configure Kaggle authentication using Kaggle's current account/API instructions. Never upload `kaggle.json`, API tokens, or credentials to GitHub.
 
-## 2. Choose a dataset on Kaggle
-Open Kaggle Datasets and select a dataset that actually contains the required files. The dataset URL usually looks like:
+## Experiment 2 — Quora Question Pairs
+The official [Quora Question Pairs Kaggle competition](https://www.kaggle.com/c/quora-question-pairs/data) contains `train.csv` with `question1`, `question2`, and `is_duplicate`. You must sign in and accept the competition rules before downloading.
 
-`https://www.kaggle.com/datasets/OWNER/DATASET-SLUG`
+```bash
+python datasets/kaggle_download.py quora
+```
 
-Use only `OWNER/DATASET-SLUG` in the environment variable. Dataset availability, licenses, file layouts, and terms may change, so inspect each dataset page before downloading.
+This uses the Kaggle CLI, downloads the competition archive to `data/quora/`, and extracts it. The file should end up at `data/quora/train.csv`, which is the default path for `python/experiment_02.py`.
 
-Recommended file requirements:
-- **Quora pairs:** `train.csv` with `question1`, `question2`, and `is_duplicate` columns.
-- **Human Activity Recognition:** extracted UCI HAR layout containing `train/X_train.txt`, `train/y_train.txt`, `test/X_test.txt`, and `test/y_test.txt`.
-- **Driving:** a Udacity-style `driving_log.csv` and matching image files, often under `IMG/`. After download, arrange these as `data/driving_log.csv` and `data/IMG/` for experiments 1 and 6.
-- **MIDI:** one or more `.mid` files. Arrange them under `data/midi_files/`.
+## Experiments 1 and 6 — driving images and steering log
+Choose a Kaggle dataset whose files include an Udacity-style `driving_log.csv` and matching center-camera images. The experiment code expects:
+- `data/driving_log.csv`
+- `data/IMG/`
 
-## 3. Set the dataset slug and download
+Pick a dataset after checking its file layout and license. Then set the dataset's actual Kaggle owner/slug.
 
 Linux/macOS:
 ```bash
-export KAGGLE_QUORA_DATASET="OWNER/DATASET-SLUG"
-python datasets/kaggle_download.py quora
-
-export KAGGLE_HAR_DATASET="OWNER/DATASET-SLUG"
-python datasets/kaggle_download.py har
-
 export KAGGLE_DRIVING_DATASET="OWNER/DATASET-SLUG"
 python datasets/kaggle_download.py driving
-
-export KAGGLE_MIDI_DATASET="OWNER/DATASET-SLUG"
-python datasets/kaggle_download.py midi
 ```
 
 Windows PowerShell:
 ```powershell
-$env:KAGGLE_QUORA_DATASET="OWNER/DATASET-SLUG"
-python datasets/kaggle_download.py quora
+$env:KAGGLE_DRIVING_DATASET="OWNER/DATASET-SLUG"
+python datasets/kaggle_download.py driving
 ```
-Repeat for the other environment variables and names shown above.
 
-Install experiment dependencies as needed:
+After download, move/rename files to the exact paths above if the dataset has nested folders.
+
+## Experiment 3 — Human Activity Recognition
+Choose a Kaggle dataset containing the original UCI HAR train/test files. The expected layout is `data/UCI HAR Dataset/train/X_train.txt`, `train/y_train.txt`, `test/X_test.txt`, and `test/y_test.txt`.
+
 ```bash
-python -m pip install pandas numpy opencv-python scikit-learn nltk matplotlib seaborn tensorflow pretty_midi
+export KAGGLE_HAR_DATASET="OWNER/DATASET-SLUG"
+python datasets/kaggle_download.py har
 ```
 
-**Important:** The downloader cannot guess which Kaggle dataset you intended. Replace each placeholder with a dataset slug you verified on Kaggle. After download, check file paths and terms. Large datasets should not be committed to this GitHub repository.
+Verify the dataset contents before running. An official alternative is the [UCI HAR dataset page](https://archive.ics.uci.edu/dataset/240/human%2Bactivity%2Brecognition%2Busing%2Bsmartphones), but that is not a Kaggle URL.
+
+## Experiment 5 — MIDI music
+Choose a Kaggle dataset that contains `.mid` files, then set the actual dataset slug:
+
+```bash
+export KAGGLE_MIDI_DATASET="OWNER/DATASET-SLUG"
+python datasets/kaggle_download.py midi
+```
+
+The downloader copies the downloaded files into `data/midi_files/`. If the MIDI files are nested inside folders, the experiment script currently searches only the top-level folder; move the MIDI files there or adjust the script to search recursively.
+
+## Dependencies
+Install the experiment libraries from the repository root:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Some datasets are large and may require Kaggle account access or acceptance of terms. This repository deliberately does not store datasets. Dataset owner/slug placeholders must be replaced with a real Kaggle dataset you have checked; dataset contents, licensing, and layout vary.
