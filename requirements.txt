@@ -8,3 +8,4 @@ seaborn
 tensorflow
 pretty_midi
 kagglehub
+kaggle
