@@ -1,0 +1,10 @@
+pandas
+numpy
+opencv-python
+scikit-learn
+nltk
+matplotlib
+seaborn
+tensorflow
+pretty_midi
+kagglehub
